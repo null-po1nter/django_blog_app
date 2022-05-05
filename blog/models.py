@@ -9,6 +9,11 @@ from taggit.managers import TaggableManager
 User = get_user_model()
 
 
+class PublishManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_published=True)
+
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = RichTextUploadingField()
@@ -19,6 +24,8 @@ class Post(models.Model):
     published_at = models.DateTimeField(default=timezone.now)
     is_published = models.BooleanField(default=True)
     tags = TaggableManager()
+
+    published = PublishManager()
 
     class Meta:
         ordering = ('-published_at',)
