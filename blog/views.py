@@ -14,5 +14,5 @@ def post_detail(request, post):
     post = get_object_or_404(Post, slug=post, is_published=True)
     
     return render(request, 'post_detail.html', context={
-        'post': post
+        'post': post,
     })
