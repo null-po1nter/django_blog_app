@@ -14,6 +14,18 @@ class PublishManager(models.Manager):
         return super().get_queryset().filter(is_published=True)
 
 
+class Category(models.Model):
+    title = models.CharField(max_length=150)
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        ordering = ['title']
+
+
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = RichTextUploadingField()
@@ -23,7 +35,8 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     published_at = models.DateTimeField(default=timezone.now)
     is_published = models.BooleanField(default=True)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
+    category = models.ForeignKey()
 
     published = PublishManager()
 
