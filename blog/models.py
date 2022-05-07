@@ -15,11 +15,12 @@ class PublishManager(models.Manager):
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=150, unique=True)
+    slug = models.SlugField(max_length=50, unique=True)
 
     def __str__(self):
         return self.title
-    
+
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
@@ -36,12 +37,14 @@ class Post(models.Model):
     published_at = models.DateTimeField(default=timezone.now)
     is_published = models.BooleanField(default=True)
     tags = TaggableManager(blank=True)
-    category = models.ForeignKey()
+    category = models.ForeignKey('Category', on_delete=models.PROTECT, related_name='posts')
 
     published = PublishManager()
 
     class Meta:
         ordering = ('-published_at',)
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
 
     def get_absolute_url(self):
         return reverse("blog:post_detail", args=[self.slug])

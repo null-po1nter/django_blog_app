@@ -1,12 +1,18 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post
+from taggit.models import Tag
+from .models import Post, Category
+
 
 
 def post_list(request):
     posts = Post.published.all()
+    categories = Category.objects.all()
+    tags = Tag.objects.all()
 
     return render(request, 'index.html', context={
         'posts': posts,
+        'categories': categories,
+        'tags': tags
     })
 
 
