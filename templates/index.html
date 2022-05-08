@@ -2,9 +2,11 @@
 {% block title %} {{ title }} {% endblock %}
 
 {% block content %}
-  {% for post in posts %}
+{% for post in posts %}
     <article class="blog-post">
+      <a href="{{ post.get_absolute_url }}" class="text-decoration-none text-dark">
       <h2 class="blog-post-title">{{ post.title }}</h2>
+      </a>
       <p class="blog-post-meta">
         <a class="text-decoration-none" href="#">{{ post.category.title }}</a>
         <br>
@@ -25,10 +27,8 @@
         {% endif %}
         </p>
     </article>
-  {% endfor %}
-{% endblock %}
-<!-- Pagination -->
-<!-- <nav class="blog-pagination" aria-label="Pagination">
-          <a class="btn btn-outline-primary" href="#">Older</a>
-          <a class="btn btn-outline-secondary disabled">Newer</a>
-</nav> -->
+
+    {% endfor %}
+    <!-- Pagination -->
+    {% include 'inc/pagination.html' with page=posts %}
+    {% endblock %}
