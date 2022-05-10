@@ -148,8 +148,6 @@ h6 {
   padding: 2.5rem 0;
   color: #727272;
   text-align: center;
-  background-color: #f9f9f9;
-  border-top: .05rem solid #e5e5e5;
 }
 
 .blog-footer p:last-child {
@@ -162,4 +160,16 @@ a {
 
 .tag {
   color: #727272;
+}
+
+.navbar {
+  background-color: #000000;
+}
+
+.logo {
+  padding-left: 1%;
+}
+
+.tags {
+  padding-top: 1%;
 }
