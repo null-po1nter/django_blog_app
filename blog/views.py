@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.generic import ListView, DetailView, CreateView
+from django.utils import timezone
 from .models import Post
+from .forms import PostForm
 
 
 def post_list(request):
@@ -31,4 +32,26 @@ def post_detail(request, post):
        
     return render(request, 'post_detail.html', context={
         'post': post,
+    })
+
+
+def add_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_at = timezone.now()
+            post.save()
+            
+            return redirect('post_detail.html', context={
+                'post': post
+            })
+    
+    else:
+        form = PostForm()
+    
+    return render(request, 'post_edit.html', context={
+        'form': form
     })
