@@ -20,7 +20,9 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('blog.urls', namespace='blog')),
+    path('', include('blog.urls')),
+    path('auth/', include('users.urls')),
+    path('auth/', include('django.contrib.auth.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
