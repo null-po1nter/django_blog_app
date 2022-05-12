@@ -32,17 +32,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'blog',
+    'users',
+    'ckeditor',
+    'ckeditor_uploader',
+    'taggit',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ckeditor',
-    'ckeditor_uploader',
-    'taggit',
-    'blog',
-    'users',
 ]
 
 MIDDLEWARE = [
@@ -211,3 +211,8 @@ CKEDITOR_CONFIGS = {
 
 # taggit
 TAGGIT_CASE_INSENSITIVE = True
+
+# login
+LOGIN_URL = "/auth/login/"
+LOGIN_REDIRECT_URL = "index" 
+# LOGOUT_REDIRECT_URL = "index"

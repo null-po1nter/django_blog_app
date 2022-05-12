@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from pytils.translit import slugify
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required, permission_required
 from .models import Post
 from .forms import PostForm
 
@@ -35,19 +37,28 @@ def post_detail(request, post):
     })
 
 
+
+@login_required
+@permission_required('blog.add_post')
 def add_post(request):
+
     if request.method == 'POST':
         form = PostForm(request.POST)
         
         if form.is_valid():
             post = form.save(commit=False)
+            # post.slug = request
             post.author = request.user
             post.published_at = timezone.now()
+            post.slug = slugify(request.POST.get('title'), )
             post.save()
-            
-            return redirect('post_detail.html', context={
-                'post': post
-            })
+
+            return redirect(
+                post.get_absolute_url(),
+                context={
+                    'post': post
+                }
+            )
     
     else:
         form = PostForm()

@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.core.validators import MinValueValidator
 from ckeditor_uploader.fields import RichTextUploadingField
 from taggit.managers import TaggableManager
 
@@ -41,13 +42,14 @@ class Post(models.Model):
 
     published = PublishManager()
 
+
     class Meta:
         ordering = ('-published_at',)
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
 
     def get_absolute_url(self):
-        return reverse("blog:post_detail", args=[self.slug])
+        return reverse("post_detail", args=[self.slug])
 
     def __str__(self):
         return self.title
