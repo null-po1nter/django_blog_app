@@ -37,7 +37,6 @@ def post_detail(request, post):
     })
 
 
-
 @login_required
 @permission_required('blog.add_post')
 def add_post(request):
@@ -47,11 +46,11 @@ def add_post(request):
         
         if form.is_valid():
             post = form.save(commit=False)
-            # post.slug = request
             post.author = request.user
             post.published_at = timezone.now()
             post.slug = slugify(request.POST.get('title'), )
             post.save()
+            form.save_m2m()
 
             return redirect(
                 post.get_absolute_url(),
