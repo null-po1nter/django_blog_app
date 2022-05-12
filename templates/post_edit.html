@@ -13,9 +13,9 @@
                     </div>
                 {% endfor %}
 
-                <form method="post" action="{% url 'blog:add_post' %}">
+                <form method="post" action="{% url 'add_post' %}">
                     {% csrf_token %}
-                    {{ form.as_p }}``
+                    {{ form.as_p }}
                     <div class="col-md-6 offset-md-4">              
                         <button type="submit" class="btn btn-dark btc-block">
                             Добавить пост

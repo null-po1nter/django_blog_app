@@ -5,7 +5,7 @@
 {% for post in posts %}
     <article class="blog-post">
       <a href="{{ post.get_absolute_url }}" class="text-decoration-none text-dark">
-      <h2 class="blog-post-title">{{ post.title }}</h2>
+        <h2 class="blog-post-title">{{ post.title }}</h2>
       </a>
       <p class="blog-post-meta">
         <a class="text-decoration-none" href="#">{{ post.category.title }}</a>
@@ -31,4 +31,4 @@
     {% endfor %}
     <!-- Pagination -->
     {% include 'inc/pagination.html' with page=posts %}
-    {% endblock %}
+{% endblock %}
