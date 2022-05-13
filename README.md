@@ -11,6 +11,7 @@ pip install -r requirements.txt
 
 ## Run
 ```
+cd django_blog_app/
 python manage.py createsuperuser
 python manage.py makemigrations
 python manage.py migrate
