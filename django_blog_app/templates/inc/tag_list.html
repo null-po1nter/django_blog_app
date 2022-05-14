@@ -6,7 +6,7 @@
             {% if tags.all %}
             <ol class="list-unstyled mb-0">
                 {% for tag in tags.all %}
-                <li class="fw-light"><a class="tag text-decoration-none" href="#">{{ tag.name }}</a></li>
+                <li class="fw-light"><a class="tag text-decoration-none" href="{% url 'post_list' tag.name %}">{{ tag.name }}</a></li>
                 {% endfor %}
             </ol>
             {% endif %}

@@ -7,8 +7,11 @@ from .models import Post
 from .forms import PostForm
 
 
-def post_list(request):
-    posts = Post.published.all()
+def post_list(request, tag=None):
+    if tag:
+        posts = Post.published.filter(tags__name__in=[tag])
+    else:
+        posts = Post.published.all()
 
     # pagination
     paginator = Paginator(posts, 5)
@@ -16,7 +19,7 @@ def post_list(request):
 
     try:
         posts = paginator.page(page)
-    
+
     except PageNotAnInteger:            # if page is not an integer
         posts = paginator.page(1)       # deliver the first page
    
@@ -40,7 +43,6 @@ def post_detail(request, post):
 @login_required
 @permission_required('blog.add_post')
 def add_post(request):
-
     if request.method == 'POST':
         form = PostForm(request.POST)
         
