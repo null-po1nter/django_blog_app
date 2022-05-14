@@ -7,9 +7,10 @@ from .models import Post
 from .forms import PostForm
 
 
-def post_list(request, tag=None):
+def post_list(request, tag=None, category=None):
     if tag:
         posts = Post.published.filter(tags__name__in=[tag])
+
     else:
         posts = Post.published.all()
 
@@ -66,4 +67,25 @@ def add_post(request):
     
     return render(request, 'post_edit.html', context={
         'form': form
+    })
+
+
+def posts_by_category(request, category):
+    posts = Post.published.filter(category__title=category)
+
+    paginator = Paginator(posts, 5)
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+
+    except PageNotAnInteger:            # if page is not an integer
+        posts = paginator.page(1)       # deliver the first page
+   
+    except EmptyPage:                                   # if page is out of range
+        posts = paginator.page(paginator.num_pages)     # deliver last page of results
+
+    return render(request, 'index.html', context={
+        'posts': posts,
+        page: 'pages',          # pass the page number
     })
